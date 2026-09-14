@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500&display=swap');
+
+:root {
+  --sand: #EFE7D8;
+  --night: #0F2A22;
+  --palm: #1F5C46;
+  --gold: #C9A227;
+  --cream-text: #F6F1E4;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  background: radial-gradient(ellipse at top, #163B2E 0%, #0B211A 60%, #081712 100%);
+  color: var(--cream-text);
+  min-height: 100vh;
+  padding: 48px 40px;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 20% 30%, rgba(246,241,228,.5), transparent),
+    radial-gradient(1.5px 1.5px at 70% 15%, rgba(246,241,228,.4), transparent),
+    radial-gradient(1px 1px at 85% 60%, rgba(246,241,228,.35), transparent),
+    radial-gradient(1.5px 1.5px at 40% 80%, rgba(246,241,228,.3), transparent),
+    radial-gradient(1px 1px at 55% 45%, rgba(246,241,228,.4), transparent);
+  pointer-events: none;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.header h1 {
+  font-size: 52px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+}
+
+.header .accent {
+  color: var(--gold);
+}
+
+.header .sub {
+  margin-top: 10px;
+  font-size: 16px;
+  color: rgba(246,241,228,0.55);
+}
+
+.tracks {
+  max-width: 980px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.track-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.team-label {
+  width: 130px;
+  flex-shrink: 0;
+  text-align: left;
+}
+
+.team-label .name {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.team-label .score {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  color: var(--gold);
+  margin-top: 2px;
+}
+
+.track {
+  position: relative;
+  flex: 1;
+  height: 64px;
+  background: rgba(246,241,228,0.06);
+  border-radius: 32px;
+  border: 1px solid rgba(246,241,228,0.12);
+}
+
+.track::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  left: 90px;
+  height: 1px;
+  background-image: linear-gradient(to left, rgba(246,241,228,0.25) 0 6px, transparent 6px 16px);
+  background-size: 16px 1px;
+  transform: translateY(-50%);
+}
+
+.finish {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  color: rgba(246,241,228,0.4);
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.runner {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+  transition: right 0.8s cubic-bezier(.22,.9,.35,1);
+}
+
+.runner.gold { background: linear-gradient(135deg, #E3C567, var(--gold)); }
+.runner.palm { background: linear-gradient(135deg, #2E7A5C, var(--palm)); }
+
+#reset-btn {
+  display: block;
+  margin: 48px auto 0;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 15px;
+  background: rgba(246,241,228,0.08);
+  color: var(--cream-text);
+  border: 1px solid rgba(246,241,228,0.15);
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#reset-btn:hover {
+  background: rgba(246,241,228,0.14);
+}
+
+.winner-overlay {
+  display: none; /* مخفي افتراضياً، نظهره فقط عند الفوز */
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 23, 18, 0.92);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+}
+
+.winner-overlay.show {
+  display: flex;
+}
+
+.winner-content {
+  text-align: center;
+  animation: popIn 0.5s ease;
+}
+
+.winner-emoji {
+  font-size: 120px;
+  margin-bottom: 24px;
+}
+
+.winner-text {
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--gold);
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* تأثير الكونفيتي المتساقط */
+.confetti {
+  position: fixed;
+  top: -20px;
+  width: 10px;
+  height: 10px;
+  z-index: 101;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(105vh) rotate(360deg);
+  }
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>سباق المحللين</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="header">
+    <h1>سبـاق <span class="accent">المحلـلين</span></h1>
+    <div class="sub">اليوم الوطني السعودي · تحدي البيانات الحي</div>
+  </div>
+
+  <div class="tracks">
+
+    <div class="track-row">
+      <div class="team-label">
+        <div class="name">فريق الصقر</div>
+        <div class="score" id="team1-score">0 نقطة</div>
+      </div>
+      <div class="track">
+        <div class="finish">🏁</div>
+        <div class="runner gold" id="team1-avatar">🦅</div>
+      </div>
+    </div>
+
+    <div class="track-row">
+      <div class="team-label">
+        <div class="name">فريق النخلة</div>
+        <div class="score" id="team2-score">0 نقطة</div>
+      </div>
+      <div class="track">
+        <div class="finish">🏁</div>
+        <div class="runner palm" id="team2-avatar">🌴</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="winner-overlay" class="winner-overlay">
+  <div class="winner-content">
+    <div class="winner-emoji" id="winner-emoji">🏆</div>
+    <div class="winner-text" id="winner-text">فريق الصقر فاز!</div>
+  </div>
+  </div>
+ 
+  <button id="reset-btn">إعاده</button>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="display.js"></script>
+</body>
+</html>

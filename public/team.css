@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap');
+
+:root {
+  --palm: #1F5C46;
+  --gold: #C9A227;
+  --cream-text: #F6F1E4;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  background: radial-gradient(ellipse at top, #163B2E 0%, #0B211A 60%, #081712 100%);
+  color: var(--cream-text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+}
+
+.team-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.team-icon {
+  font-size: 40px;
+}
+
+.team-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.question-box {
+  background: rgba(246,241,228,0.06);
+  border: 1px solid rgba(246,241,228,0.12);
+  border-radius: 20px;
+  padding: 32px;
+  max-width: 560px;
+  width: 100%;
+}
+
+.question-number {
+  font-size: 13px;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.question-box h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.option-btn {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 16px;
+  background: rgba(246,241,228,0.08);
+  color: var(--cream-text);
+  border: 1px solid rgba(246,241,228,0.15);
+  border-radius: 12px;
+  padding: 16px 20px;
+  text-align: right;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.option-btn:hover {
+  background: rgba(246,241,228,0.14);
+}
+
+.option-btn:active {
+  transform: scale(0.98);
+}
+
+.feedback {
+  margin-top: 24px;
+  font-size: 20px;
+  font-weight: 700;
+  min-height: 30px;
+}
