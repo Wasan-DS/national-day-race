@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>إحصائيات التخصصات</title>
+  <link rel="stylesheet" href="stats.css">
+</head>
+<body>
+
+  <div class="header">
+    <h1>إحصائيات <span class="accent">التخصصات</span></h1>
+    <div class="sub">نسبة الفوز حسب التخصص · تحدّث حي</div>
+  </div>
+
+  <div class="chart-container" id="chart-container">
+    <!-- الأعمدة راح تنضاف هنا تلقائياً بواسطة الجافاسكربت -->
+    <div class="empty-message" id="empty-message">لسا ما فيه نتائج... خلي الفرق تكمل جولة وحدة على الأقل 📊</div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="stats.js"></script>
+</body>
+</html>

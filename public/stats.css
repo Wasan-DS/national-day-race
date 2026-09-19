@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500&display=swap');
+
+:root {
+  --sand: #EFE7D8;
+  --night: #0F2A22;
+  --palm: #1F5C46;
+  --gold: #C9A227;
+  --cream-text: #F6F1E4;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  background: radial-gradient(ellipse at top, #163B2E 0%, #0B211A 60%, #081712 100%);
+  color: var(--cream-text);
+  min-height: 100vh;
+  padding: 48px 40px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.header h1 {
+  font-size: 44px;
+  font-weight: 900;
+}
+
+.header .accent {
+  color: var(--gold);
+}
+
+.header .sub {
+  margin-top: 10px;
+  font-size: 15px;
+  color: rgba(246,241,228,0.55);
+}
+
+.chart-container {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.empty-message {
+  text-align: center;
+  color: rgba(246,241,228,0.4);
+  font-size: 18px;
+  padding: 60px 20px;
+}
+
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.bar-label {
+  width: 160px;
+  flex-shrink: 0;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.bar-track {
+  flex: 1;
+  height: 44px;
+  background: rgba(246,241,228,0.06);
+  border-radius: 22px;
+  border: 1px solid rgba(246,241,228,0.12);
+  overflow: hidden;
+  position: relative;
+}
+
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--palm), var(--gold));
+  border-radius: 22px;
+  transition: width 0.6s ease;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-left: 12px;
+}
+
+.bar-percent {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--night);
+}
+
+.bar-details {
+  width: 140px;
+  flex-shrink: 0;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: rgba(246,241,228,0.5);
+}
