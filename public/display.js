@@ -61,26 +61,22 @@ function showWinner(teamId) {
 }
 
 // دالة تعرض شاشة التعادل
-function playTieSound() {
-  const notes = [440, 440];
+function showTie() {
+  const overlay = document.getElementById('winner-overlay');
+  const winnerText = document.getElementById('winner-text');
+  const winnerEmoji = document.getElementById('winner-emoji');
 
-  notes.forEach((freq, i) => {
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
+  winnerText.textContent = 'تعادل! 🤝';
+  winnerEmoji.textContent = '⚖️';
 
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
+  overlay.classList.add('show');
+  playTieSound();
 
-    oscillator.type = 'triangle';
-    oscillator.frequency.setValueAtTime(freq, audioContext.currentTime + i * 0.25);
-    gainNode.gain.setValueAtTime(0.25, audioContext.currentTime + i * 0.25);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + i * 0.25 + 0.2);
-
-    oscillator.start(audioContext.currentTime + i * 0.25);
-    oscillator.stop(audioContext.currentTime + i * 0.25 + 0.2);
-  });
-}
-
+  // تختفي شاشة التعادل تلقائياً بعد 4 ثواني
+  setTimeout(() => {
+    overlay.classList.remove('show');
+  }, 4000);
+} 
 
 // دالة تسوي تأثير الكونفيتي المتساقط
 function launchConfetti() {
