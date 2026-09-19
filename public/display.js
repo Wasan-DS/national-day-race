@@ -22,12 +22,16 @@ function updateTeamDisplay(teamId, score) {
   const avatar = document.getElementById(`${teamId}-avatar`);
   avatar.style.left = `${leftPosition}%`;
   avatar.style.right = 'auto';
-
-  // إذا وصل الفريق لآخر نقطة (فاز)، نعرض الاحتفال
-  if (score >= maxScore) {
-    showWinner(teamId);
-  }
 }
+
+// نستمع لنتيجة نهاية اللعبة (فوز أو تعادل) من السيرفر
+socket.on('gameOver', (data) => {
+  if (data.result === 'tie') {
+    showTie();
+  } else if (data.result === 'win') {
+    showWinner(data.winner);
+  }
+});
 
 // دالة تعرض شاشة الفوز
 function showWinner(teamId) {
@@ -45,6 +49,19 @@ function showWinner(teamId) {
 
   overlay.classList.add('show');
   launchConfetti();
+}
+
+// دالة تعرض شاشة التعادل
+function showTie() {
+  const overlay = document.getElementById('winner-overlay');
+  const winnerText = document.getElementById('winner-text');
+  const winnerEmoji = document.getElementById('winner-emoji');
+
+  winnerText.textContent = 'تعادل! 🤝';
+  winnerEmoji.textContent = '⚖';
+
+  overlay.classList.add('show');
+  // ما نطلق كونفيتي بحالة التعادل، بس نعرض الرسالة
 }
 
 // دالة تسوي تأثير الكونفيتي المتساقط

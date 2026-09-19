@@ -70,6 +70,7 @@ function goToNextQuestion() {
   } else {
     document.getElementById('question-text').textContent = 'خلصت الأسئلة! 🎉';
     document.getElementById('options-container').style.display = 'none';
+    socket.emit('quizFinished', 'team1');
   }
 }
 
