@@ -1,21 +1,36 @@
-// نتصل بالسيرفر
+
 const socket = io();
 
-// سياق صوتي نستخدمه لأصوات الفوز والتعادل
+
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-// نحدد أقصى نقاط عشان نعرف "خط النهاية" (كم سؤال بالمجموع = 5 أسئلة)
+
 const maxScore = 5;
 
-// نستمع لتحديثات النقاط الجاية من السيرفر
+
 socket.on('updateScores', (scores) => {
   console.log('تحديث جديد للنقاط:', scores);
-
+ 
   updateTeamDisplay('team1', scores.team1);
   updateTeamDisplay('team2', scores.team2);
 });
 
-// دالة تحدث موقع الشخصية ورقم النقاط لفريق معين
+socket.on('playersUpdated', (players) => {
+  updatePlayerName('team1', players.team1);
+  updatePlayerName('team2', players.team2);
+});
+
+function updatePlayerName(teamId, player) {
+  const nameElement = document.querySelector(`#${teamId}-name`);
+  if (!nameElement) return;
+
+  if (player && player.name) {
+    nameElement.textContent = `${player.name} (${player.major})`;
+  } else {
+    nameElement.textContent = teamId === 'team1' ? 'فريق الصقر' : 'فريق النخلة';
+  }
+}
+
 function updateTeamDisplay(teamId, score) {
   document.getElementById(`${teamId}-score`).textContent = `${score} نقطة`;
 
@@ -27,7 +42,7 @@ function updateTeamDisplay(teamId, score) {
   avatar.style.right = 'auto';
 }
 
-// نستمع لنتيجة نهاية اللعبة (فوز أو تعادل) من السيرفر
+
 socket.on('gameOver', (data) => {
   if (data.result === 'tie') {
     showTie();
@@ -36,31 +51,29 @@ socket.on('gameOver', (data) => {
   }
 });
 
-// دالة تعرض شاشة الفوز
+
 function showWinner(teamId) {
   const overlay = document.getElementById('winner-overlay');
   const winnerText = document.getElementById('winner-text');
   const winnerEmoji = document.getElementById('winner-emoji');
 
-  if (teamId === 'team1') {
-    winnerText.textContent = 'فريق الصقر فاز! 🦅';
-    winnerEmoji.textContent = '🏆';
-  } else {
-    winnerText.textContent = 'فريق النخلة فاز! 🌴';
-    winnerEmoji.textContent = '🏆';
-  }
+  const nameElement = document.querySelector(`#${teamId}-name`);
+  const displayName = nameElement ? nameElement.textContent : (teamId === 'team1' ? 'فريق الصقر' : 'فريق النخلة');
+
+  winnerText.textContent = `${displayName} فاز! 🏆`;
+  winnerEmoji.textContent = '🏆';
 
   overlay.classList.add('show');
   launchConfetti();
   playWinSound();
 
-  // تختفي شاشة الفوز تلقائياً بعد 4 ثواني
+
   setTimeout(() => {
     overlay.classList.remove('show');
   }, 4000);
 }
 
-// دالة تعرض شاشة التعادل
+
 function showTie() {
   const overlay = document.getElementById('winner-overlay');
   const winnerText = document.getElementById('winner-text');
@@ -72,13 +85,13 @@ function showTie() {
   overlay.classList.add('show');
   playTieSound();
 
-  // تختفي شاشة التعادل تلقائياً بعد 4 ثواني
+
   setTimeout(() => {
     overlay.classList.remove('show');
   }, 4000);
-} 
+}
 
-// دالة تسوي تأثير الكونفيتي المتساقط
+
 function launchConfetti() {
   const colors = ['#C9A227', '#1F5C46', '#F6F1E4', '#4ADE80'];
 
@@ -97,20 +110,22 @@ function launchConfetti() {
   }
 }
 
-// زر إعادة التصفير
+
 const resetButton = document.getElementById('reset-btn');
 resetButton.addEventListener('click', () => {
   socket.emit('resetGame');
 });
 
-// نستمع لرسالة "إعادة تشغيل" من السيرفر ونخفي شاشة الفوز
+
 socket.on('restartQuestions', () => {
   document.getElementById('winner-overlay').classList.remove('show');
+  updatePlayerName('team1', null);
+  updatePlayerName('team2', null);
 });
 
-// دالة تشغل صوت الفوز (نغمات متصاعدة احتفالية)
+
 function playWinSound() {
-  const notes = [523, 659, 784, 1047]; // نغمات دو-مي-صول-دو (لحن بسيط احتفالي)
+  const notes = [523, 659, 784, 1047];
 
   notes.forEach((freq, i) => {
     const oscillator = audioContext.createOscillator();
@@ -128,9 +143,9 @@ function playWinSound() {
   });
 }
 
-// دالة تشغل صوت التعادل (نغمة محايدة مكررة مرتين)
+
 function playTieSound() {
-  const notes = [440, 440]; // نفس النغمة مرتين، يعطي إحساس "تعادل/تكرار"
+  const notes = [440, 440];
 
   notes.forEach((freq, i) => {
     const oscillator = audioContext.createOscillator();

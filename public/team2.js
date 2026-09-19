@@ -1,29 +1,50 @@
 const socket = io();
 
-// نسوي سياق صوتي واحد بس نستخدمه لكل الأصوات (بدل ما نسوي وحدة جديدة كل مرة)
+
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
 let currentQuestionIndex = 0;
-let hasAnswered = false; // متغير يتتبع هل جاوبنا على السؤال الحالي أو لا
+let hasAnswered = false;
+
+const startButton = document.getElementById('start-btn');
+startButton.addEventListener('click', () => {
+  const nameInput = document.getElementById('player-name');
+  const majorInput = document.getElementById('player-major');
+
+  const name = nameInput.value.trim();
+  const major = majorInput.value.trim();
+
+  if (name === '' || major === '') {
+    alert('لازم تكتبين اسمك وتخصصك قبل ما تبدين');
+    return;
+  }
+
+  socket.emit('registerPlayer', { team: 'team2', name: name, major: major });
+
+  document.getElementById('team-title').textContent = name;
+
+  document.getElementById('registration-box').style.display = 'none';
+  document.getElementById('quiz-box').style.display = 'block';
+
+  showQuestion();
+});
 
 function showQuestion() {
   const question = questions[currentQuestionIndex];
   document.getElementById('question-text').textContent = question.text;
   document.querySelector('.question-number').textContent = `السؤال ${currentQuestionIndex + 1}`;
 
-  const optionButtons = document.querySelectorAll('.option-btn');
+  const optionButtons = document.querySelectorAll('#quiz-box .option-btn');
   optionButtons.forEach((button, index) => {
     button.textContent = question.options[index];
-    button.disabled = false; // نفعل الأزرار من جديد
+    button.disabled = false;
     button.style.opacity = '1';
   });
 
-  hasAnswered = false; // نصفر متغير "جاوبنا" عشان السؤال الجديد
+  hasAnswered = false;
 }
 
-showQuestion();
-
-const optionButtons = document.querySelectorAll('.option-btn');
+const optionButtons = document.querySelectorAll('#quiz-box .option-btn');
 optionButtons.forEach((button, index) => {
   button.addEventListener('click', () => {
     checkAnswer(index);
@@ -31,12 +52,11 @@ optionButtons.forEach((button, index) => {
 });
 
 function checkAnswer(selectedIndex) {
-  // لو سبق وجاوبنا على هذا السؤال، تجاهل أي ضغطة إضافية
+  
   if (hasAnswered) return;
-  hasAnswered = true; // نسجل إننا جاوبنا
+  hasAnswered = true;
 
-  // نعطل كل الأزرار عشان ما يضغطون مرة ثانية
-  const optionButtons = document.querySelectorAll('.option-btn');
+  const optionButtons = document.querySelectorAll('#quiz-box .option-btn');
   optionButtons.forEach((button) => {
     button.disabled = true;
     button.style.opacity = '0.5';
@@ -85,7 +105,7 @@ function playSound(type) {
     oscillator.frequency.setValueAtTime(880, audioContext.currentTime);
     oscillator.frequency.setValueAtTime(1108, audioContext.currentTime + 0.1);
   } else {
-    oscillator.type = 'sawtooth'; // نوع موجة مختلف يعطي صوت أوضح للخطأ
+    oscillator.type = 'sawtooth';
     oscillator.frequency.setValueAtTime(150, audioContext.currentTime);
   }
 
@@ -101,5 +121,12 @@ socket.on('restartQuestions', () => {
   hasAnswered = false;
   document.getElementById('feedback').textContent = '';
   document.getElementById('options-container').style.display = 'flex';
+  document.getElementById('team-title').textContent = 'فريق النخلة';
+
+  document.getElementById('registration-box').style.display = 'block';
+  document.getElementById('quiz-box').style.display = 'none';
+  document.getElementById('player-name').value = '';
+  document.getElementById('player-major').value = '';
+
   showQuestion();
 });
