@@ -1,6 +1,9 @@
 // نتصل بالسيرفر
 const socket = io();
 
+// سياق صوتي نستخدمه لأصوات الفوز والتعادل
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
 // نحدد أقصى نقاط عشان نعرف "خط النهاية" (كم سؤال بالمجموع = 5 أسئلة)
 const maxScore = 5;
 
@@ -49,6 +52,7 @@ function showWinner(teamId) {
 
   overlay.classList.add('show');
   launchConfetti();
+  playWinSound();
 
   // تختفي شاشة الفوز تلقائياً بعد 4 ثواني
   setTimeout(() => {
@@ -57,21 +61,26 @@ function showWinner(teamId) {
 }
 
 // دالة تعرض شاشة التعادل
-function showTie() {
-  const overlay = document.getElementById('winner-overlay');
-  const winnerText = document.getElementById('winner-text');
-  const winnerEmoji = document.getElementById('winner-emoji');
+function playTieSound() {
+  const notes = [440, 440];
 
-  winnerText.textContent = 'تعادل! 🤝';
-  winnerEmoji.textContent = '⚖️';
+  notes.forEach((freq, i) => {
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
 
-  overlay.classList.add('show');
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
 
-  // تختفي شاشة التعادل تلقائياً بعد 4 ثواني
-  setTimeout(() => {
-    overlay.classList.remove('show');
-  }, 4000);
-} 
+    oscillator.type = 'triangle';
+    oscillator.frequency.setValueAtTime(freq, audioContext.currentTime + i * 0.25);
+    gainNode.gain.setValueAtTime(0.25, audioContext.currentTime + i * 0.25);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + i * 0.25 + 0.2);
+
+    oscillator.start(audioContext.currentTime + i * 0.25);
+    oscillator.stop(audioContext.currentTime + i * 0.25 + 0.2);
+  });
+}
+
 
 // دالة تسوي تأثير الكونفيتي المتساقط
 function launchConfetti() {
@@ -102,3 +111,44 @@ resetButton.addEventListener('click', () => {
 socket.on('restartQuestions', () => {
   document.getElementById('winner-overlay').classList.remove('show');
 });
+
+// دالة تشغل صوت الفوز (نغمات متصاعدة احتفالية)
+function playWinSound() {
+  const notes = [523, 659, 784, 1047]; // نغمات دو-مي-صول-دو (لحن بسيط احتفالي)
+
+  notes.forEach((freq, i) => {
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    oscillator.frequency.setValueAtTime(freq, audioContext.currentTime + i * 0.15);
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime + i * 0.15);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + i * 0.15 + 0.3);
+
+    oscillator.start(audioContext.currentTime + i * 0.15);
+    oscillator.stop(audioContext.currentTime + i * 0.15 + 0.3);
+  });
+}
+
+// دالة تشغل صوت التعادل (نغمة محايدة مكررة مرتين)
+function playTieSound() {
+  const notes = [440, 440]; // نفس النغمة مرتين، يعطي إحساس "تعادل/تكرار"
+
+  notes.forEach((freq, i) => {
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    oscillator.type = 'triangle';
+    oscillator.frequency.setValueAtTime(freq, audioContext.currentTime + i * 0.25);
+    gainNode.gain.setValueAtTime(0.25, audioContext.currentTime + i * 0.25);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + i * 0.25 + 0.2);
+
+    oscillator.start(audioContext.currentTime + i * 0.25);
+    oscillator.stop(audioContext.currentTime + i * 0.25 + 0.2);
+  });
+}
