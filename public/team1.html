@@ -9,10 +9,27 @@
 
   <div class="team-header">
     <span class="team-icon">🦅</span>
-    <h1>فريق الصقر</h1>
+    <h1 id="team-title">فريق الصقر</h1>
   </div>
 
-  <div class="question-box">
+  <div class="question-box" id="registration-box">
+    <div class="question-number">قبل ما نبدأ</div>
+    <h2>عرفينا عن نفسك</h2>
+
+    <div class="input-group">
+      <label for="player-name">اسمك</label>
+      <input type="text" id="player-name" placeholder="اكتبي اسمك هنا">
+    </div>
+
+    <div class="input-group">
+      <label for="player-major">تخصصك</label>
+      <input type="text" id="player-major" placeholder="مثال: علم البيانات">
+    </div>
+
+    <button id="start-btn" class="option-btn">Start the challenge 🚀</button>
+  </div>
+
+  <div class="question-box" id="quiz-box" style="display: none;">
     <div class="question-number">السؤال 1</div>
     <h2 id="question-text">هنا بيظهر نص السؤال</h2>
 
@@ -29,6 +46,6 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="questions.js"></script>
   <script src="team1.js"></script>
-
+  
 </body>
 </html>
