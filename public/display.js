@@ -49,6 +49,11 @@ function showWinner(teamId) {
 
   overlay.classList.add('show');
   launchConfetti();
+
+  // تختفي شاشة الفوز تلقائياً بعد 4 ثواني
+  setTimeout(() => {
+    overlay.classList.remove('show');
+  }, 4000);
 }
 
 // دالة تعرض شاشة التعادل
@@ -58,11 +63,15 @@ function showTie() {
   const winnerEmoji = document.getElementById('winner-emoji');
 
   winnerText.textContent = 'تعادل! 🤝';
-  winnerEmoji.textContent = '⚖';
+  winnerEmoji.textContent = '⚖️';
 
   overlay.classList.add('show');
-  // ما نطلق كونفيتي بحالة التعادل، بس نعرض الرسالة
-}
+
+  // تختفي شاشة التعادل تلقائياً بعد 4 ثواني
+  setTimeout(() => {
+    overlay.classList.remove('show');
+  }, 4000);
+} 
 
 // دالة تسوي تأثير الكونفيتي المتساقط
 function launchConfetti() {
