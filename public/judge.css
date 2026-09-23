@@ -134,3 +134,20 @@ body {
   background: #F87171;
   color: var(--night);
 }
+.panel.solo {
+  flex: none;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 48px;
+}
+
+.panel.solo .challenge-prompt {
+  font-size: 30px;
+  min-height: 100px;
+}
+
+.panel.solo .judge-btn {
+  font-size: 22px;
+  padding: 26px;
+}

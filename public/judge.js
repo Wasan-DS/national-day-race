@@ -1,6 +1,22 @@
 var socket = io();
 socket.emit('identify', 'judge');
 
+var urlParams = new URLSearchParams(window.location.search);
+var soloTeam = urlParams.get('team'); // team1 أو team2 أو فاضي
+
+if (soloTeam === 'team1' || soloTeam === 'team2') {
+  var otherTeam = soloTeam === 'team1' ? 'team2' : 'team1';
+  var otherBtn = document.querySelector('[data-team="' + otherTeam + '"]');
+  if (otherBtn) {
+    var otherPanel = otherBtn.closest('.panel');
+    if (otherPanel) otherPanel.style.display = 'none';
+  }
+  var ownBtn = document.querySelector('[data-team="' + soloTeam + '"]');
+  if (ownBtn) {
+    var ownPanel = ownBtn.closest('.panel');
+    if (ownPanel) ownPanel.classList.add('solo');
+  }
+}
 // نستقبل تحديث لحالة أي فريق (اسمه، تحديه الحالي، الإجابة المرجعية)
 socket.on('judgeChallengeUpdate', function (data) {
   renderTeamPanel(data);
