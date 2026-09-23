@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500&display=swap');
+
+:root {
+  --night: #0F2A22;
+  --palm: #1F5C46;
+  --gold: #C9A227;
+  --cream-text: #F6F1E4;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  background: radial-gradient(ellipse at top, #163B2E 0%, #0B211A 60%, #081712 100%);
+  color: var(--cream-text);
+  min-height: 100vh;
+  padding: 40px 32px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.header h1 {
+  font-size: 36px;
+  font-weight: 900;
+}
+
+.header .accent {
+  color: var(--gold);
+}
+
+.header .sub {
+  margin-top: 8px;
+  font-size: 14px;
+  color: rgba(246,241,228,0.5);
+}
+
+.panels {
+  display: flex;
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.panel {
+  flex: 1;
+  min-width: 340px;
+  background: rgba(246,241,228,0.06);
+  border: 1px solid rgba(246,241,228,0.12);
+  border-radius: 20px;
+  padding: 28px;
+}
+
+.panel-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.player-name {
+  font-size: 15px;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.progress {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  color: rgba(246,241,228,0.5);
+  margin-bottom: 20px;
+}
+
+.challenge-type {
+  font-size: 13px;
+  color: rgba(246,241,228,0.45);
+  margin-bottom: 6px;
+}
+
+.challenge-prompt {
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.6;
+  margin-bottom: 16px;
+  min-height: 60px;
+}
+
+.challenge-answer {
+  font-size: 14px;
+  background: rgba(201,162,39,0.12);
+  border: 1px dashed rgba(201,162,39,0.4);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 20px;
+  color: var(--gold);
+}
+
+.status {
+  font-size: 16px;
+  font-weight: 700;
+  color: #4ADE80;
+  margin-bottom: 12px;
+}
+
+.judge-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.judge-btn {
+  flex: 1;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.judge-btn:hover {
+  opacity: 0.85;
+}
+
+.judge-btn.pass {
+  background: #4ADE80;
+  color: var(--night);
+}
+
+.judge-btn.fail {
+  background: #F87171;
+  color: var(--night);
+}

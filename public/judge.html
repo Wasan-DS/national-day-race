@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>لوحة الحكم</title>
+  <link rel="stylesheet" href="judge.css">
+</head>
+<body>
+
+  <div class="header">
+    <h1>لوحة <span class="accent">الحكم</span></h1>
+    <div class="sub">شاشة خاصة بالحكمتين فقط</div>
+  </div>
+
+  <div class="panels">
+
+    <div class="panel">
+      <div class="panel-title">🦅 فريق الصقر</div>
+      <div class="player-name" id="team1-player-name">بانتظار التسجيل...</div>
+      <div class="progress" id="team1-progress"></div>
+      <div class="challenge-type" id="team1-type"></div>
+      <div class="challenge-prompt" id="team1-prompt"></div>
+      <div class="challenge-answer" id="team1-answer"></div>
+      <div class="status" id="team1-status"></div>
+      <div class="judge-buttons" id="team1-buttons">
+        <button class="judge-btn pass" data-team="team1" data-result="pass">نجح ✅</button>
+        <button class="judge-btn fail" data-team="team1" data-result="fail">فشل ❌</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">🌴 فريق النخلة</div>
+      <div class="player-name" id="team2-player-name">بانتظار التسجيل...</div>
+      <div class="progress" id="team2-progress"></div>
+      <div class="challenge-type" id="team2-type"></div>
+      <div class="challenge-prompt" id="team2-prompt"></div>
+      <div class="challenge-answer" id="team2-answer"></div>
+      <div class="status" id="team2-status"></div>
+      <div class="judge-buttons" id="team2-buttons">
+        <button class="judge-btn pass" data-team="team2" data-result="pass">نجح ✅</button>
+        <button class="judge-btn fail" data-team="team2" data-result="fail">فشل ❌</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="judge.js"></script>
+</body>
+</html>
